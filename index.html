@@ -1,0 +1,739 @@
+<style>
+  :root {
+    --bg-page: #FAFAF7;
+    --bg-card: #FFFFFF;
+    --bg-sunken: #F3EEEE;
+    --text-primary: #201A1C;
+    --text-secondary: #6B5E62;
+    --border: #E9E1E3;
+    --lg-red: #A50034;
+    --lg-red-dark: #6E0023;
+    --lg-red-light: #D4326C;
+    --lg-red-tint: rgba(165, 0, 52, 0.07);
+    --status-good: #2D7D46;
+    --status-good-bg: #E9F4EC;
+    --status-warn: #9C6B12;
+    --status-warn-bg: #FBF1DD;
+    --shadow: 0 1px 2px rgba(32, 15, 20, 0.05), 0 10px 24px -16px rgba(32, 15, 20, 0.16);
+    --shadow-hover: 0 6px 14px rgba(32, 15, 20, 0.10), 0 20px 36px -18px rgba(32, 15, 20, 0.22);
+    --font-body: "Malgun Gothic", "맑은 고딕", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-page: #170E10;
+      --bg-card: #241417;
+      --bg-sunken: #2D181C;
+      --text-primary: #F4EAEC;
+      --text-secondary: #C6AFB4;
+      --border: #3C2429;
+      --lg-red: #FF5D89;
+      --lg-red-dark: #E63A6B;
+      --lg-red-light: #FF8FAE;
+      --lg-red-tint: rgba(255, 93, 137, 0.10);
+      --status-good: #63C084;
+      --status-good-bg: rgba(99, 192, 132, 0.14);
+      --status-warn: #E6BB5C;
+      --status-warn-bg: rgba(230, 187, 92, 0.14);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.5), 0 22px 40px -16px rgba(0, 0, 0, 0.65);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg-page: #170E10;
+    --bg-card: #241417;
+    --bg-sunken: #2D181C;
+    --text-primary: #F4EAEC;
+    --text-secondary: #C6AFB4;
+    --border: #3C2429;
+    --lg-red: #FF5D89;
+    --lg-red-dark: #E63A6B;
+    --lg-red-light: #FF8FAE;
+    --lg-red-tint: rgba(255, 93, 137, 0.10);
+    --status-good: #63C084;
+    --status-good-bg: rgba(99, 192, 132, 0.14);
+    --status-warn: #E6BB5C;
+    --status-warn-bg: rgba(230, 187, 92, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -14px rgba(0, 0, 0, 0.55);
+    --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.5), 0 22px 40px -16px rgba(0, 0, 0, 0.65);
+  }
+  :root[data-theme="light"] {
+    --bg-page: #FAFAF7;
+    --bg-card: #FFFFFF;
+    --bg-sunken: #F3EEEE;
+    --text-primary: #201A1C;
+    --text-secondary: #6B5E62;
+    --border: #E9E1E3;
+    --lg-red: #A50034;
+    --lg-red-dark: #6E0023;
+    --lg-red-light: #D4326C;
+    --lg-red-tint: rgba(165, 0, 52, 0.07);
+    --status-good: #2D7D46;
+    --status-good-bg: #E9F4EC;
+    --status-warn: #9C6B12;
+    --status-warn-bg: #FBF1DD;
+    --shadow: 0 1px 2px rgba(32, 15, 20, 0.05), 0 10px 24px -16px rgba(32, 15, 20, 0.16);
+    --shadow-hover: 0 6px 14px rgba(32, 15, 20, 0.10), 0 20px 36px -18px rgba(32, 15, 20, 0.22);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page {
+    font-family: var(--font-body);
+    background: var(--bg-page);
+    color: var(--text-primary);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 28px 20px 64px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  ::selection { background: var(--lg-red-tint); }
+  :focus-visible { outline: 2px solid var(--lg-red); outline-offset: 2px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: linear-gradient(155deg, var(--lg-red-tint), transparent 60%), var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--lg-red);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .hero h1 {
+    font-size: clamp(1.5rem, 2.4vw + 1rem, 1.9rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .hero .dates {
+    margin: 6px 0 16px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .meta-chip {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-sunken);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+
+  /* ---------- Day tabs ---------- */
+  .day-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 22px 0 18px;
+  }
+  .day-tab {
+    font-family: inherit;
+    cursor: pointer;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .day-tab .tab-date {
+    display: block;
+    font-weight: 800;
+    font-size: 0.92rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .day-tab .tab-theme {
+    display: block;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .day-tab[aria-selected="true"] {
+    border-color: var(--lg-red);
+    box-shadow: 0 0 0 1px var(--lg-red) inset;
+  }
+  .day-tab[aria-selected="true"] .tab-date { color: var(--lg-red); }
+  .day-tab:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+  /* ---------- Day panel ---------- */
+  .day-panel { display: none; }
+  .day-panel.active { display: block; animation: fade-in 0.2s ease; }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .day-head h2 { font-size: 1.2rem; font-weight: 800; }
+  .day-head .day-sub { color: var(--text-secondary); font-size: 0.86rem; }
+  .day-stats {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 10px 0 20px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .day-stats b { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Route stepper ---------- */
+  .route {
+    position: relative;
+    padding-left: 30px;
+    margin: 0 0 22px;
+  }
+  .route::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .stop { position: relative; margin-bottom: 4px; }
+  .stop::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 3px solid var(--lg-red);
+    z-index: 1;
+  }
+  .stop-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .stop-name { font-weight: 700; font-size: 0.95rem; }
+  .stop-note { font-size: 0.82rem; color: var(--text-secondary); }
+  .transit {
+    font-size: 0.78rem;
+    color: var(--lg-red-dark);
+    margin: 6px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .transit::before { content: "→"; opacity: 0.7; }
+
+  /* ---------- Map links ---------- */
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--lg-red-dark);
+    text-decoration: none;
+    border: 1px solid var(--lg-red);
+    border-radius: 999px;
+    padding: 1px 9px;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .map-link:hover, .map-link:focus-visible { background: var(--lg-red); color: #fff; }
+  .card-map {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--lg-red);
+    text-decoration: none;
+  }
+  .card-map:hover, .card-map:focus-visible { color: var(--lg-red-dark); text-decoration: underline; }
+  .card-map::after { content: " \2192"; }
+
+  /* ---------- Place cards ---------- */
+  .cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--lg-red);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card h3 { font-size: 1rem; font-weight: 800; }
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .tag.food { background: var(--lg-red-tint); color: var(--lg-red-dark); }
+  .tag.cafe { background: rgba(212, 50, 108, 0.12); color: var(--lg-red); }
+  .tag.activity { background: var(--bg-sunken); color: var(--text-secondary); }
+  .tag.special { background: var(--status-warn-bg); color: var(--status-warn); }
+  .card .loc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
+  .card .desc { font-size: 0.86rem; margin-top: 8px; }
+  .card .price {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .card .caution {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: var(--status-warn);
+  }
+
+  /* ---------- Callout ---------- */
+  .callout {
+    margin: 14px 0 20px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border-left: 3px solid var(--status-warn);
+    background: var(--status-warn-bg);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+  }
+  .callout b { color: var(--status-warn); }
+  .callout.good { border-left-color: var(--status-good); background: var(--status-good-bg); }
+  .callout.good b { color: var(--status-good); }
+
+  /* ---------- Alt options ---------- */
+  .alt-line {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: -6px 0 18px;
+  }
+
+  /* ---------- Pool ---------- */
+  .pool { margin-top: 34px; }
+  .pool h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+  .pool .pool-sub { color: var(--text-secondary); font-size: 0.86rem; margin-bottom: 14px; }
+  .pool-filters { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .filter-btn[aria-pressed="true"] {
+    background: var(--lg-red);
+    border-color: var(--lg-red);
+    color: #fff;
+  }
+  .pool-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .pool-grid .card[hidden] { display: none; }
+
+  /* ---------- Footer notes ---------- */
+  .notes {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .notes h2 { font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
+  .notes ul { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 0.86rem; }
+  .notes li { margin-bottom: 6px; }
+  .notes li:last-child { margin-bottom: 0; }
+  .notes b { color: var(--text-primary); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @media (max-width: 520px) {
+    .day-tabs { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="eyebrow">Busan Trip · Draft</p>
+    <h1>부산 여행 코스 초안</h1>
+    <p class="dates">2026.08.02(일) – 08.05(수) · 3박 4일</p>
+    <div class="meta-row">
+      <span class="meta-chip">교통 · KTX/SRT</span>
+      <span class="meta-chip">동행 · 아내와 둘이</span>
+      <span class="meta-chip">베이스캠프 · 부산진구 개금동</span>
+      <span class="meta-chip">이동 · 대중교통 (8/2만 렌트카)</span>
+      <span class="meta-chip">예산 · 한 곳당 2인 2~3만원, 특별한 날 10만원대</span>
+    </div>
+  </header>
+
+  <nav class="day-tabs" role="tablist" aria-label="일자 선택">
+    <button class="day-tab" role="tab" data-day="1" aria-selected="true">
+      <span class="tab-date">8.2 일</span>
+      <span class="tab-theme">가족 · 렌트카</span>
+    </button>
+    <button class="day-tab" role="tab" data-day="2" aria-selected="false">
+      <span class="tab-date">8.3 월</span>
+      <span class="tab-theme">원도심</span>
+    </button>
+    <button class="day-tab" role="tab" data-day="3" aria-selected="false">
+      <span class="tab-date">8.4 화</span>
+      <span class="tab-theme">기장 라인</span>
+    </button>
+    <button class="day-tab" role="tab" data-day="4" aria-selected="false">
+      <span class="tab-date">8.5 수</span>
+      <span class="tab-theme">해안 동부 · 마무리</span>
+    </button>
+  </nav>
+
+  <!-- DAY 1 -->
+  <section class="day-panel active" data-panel="1" role="tabpanel">
+    <div class="day-head">
+      <h2>8/2 (일) — 가족과 렌트카 나들이</h2>
+      <span class="day-sub">렌트카 이용일 · 예외적으로 하루 이동 자유</span>
+    </div>
+    <div class="day-stats">이동 <b>차량 약 30분</b> · 예산 <b>렌트카 1일 7만원 이하</b> · 인원 <b>어머니 포함</b></div>
+
+    <div class="route">
+      <div class="stop">
+        <div class="stop-name">개금동 자택</div>
+        <div class="stop-note">도착, 짐 정리 및 가족 인사</div>
+      </div>
+      <div class="transit">도보 5분 · 쏘카존(만도플라자)에서 렌트카 픽업</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">을숙도 생태공원</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EC%9D%84%EC%88%99%EB%8F%84%EC%83%9D%ED%83%9C%EA%B3%B5%EC%9B%90" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">사하구 · 평지 데크길, 그늘 많음</div>
+      </div>
+      <div class="transit">차량 약 30분</div>
+      <div class="stop">
+        <div class="stop-name">개금동 자택</div>
+        <div class="stop-note">저녁 가족 식사</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top"><h3>쏘카존 · 만도플라자</h3><span class="tag activity">렌트카</span></div>
+        <div class="loc">자택 도보 5분</div>
+        <div class="desc">탁송비 없이 도보로 바로 픽업. 중형·SUV 실시간 예약 가능 여부는 앱에서 확인.</div>
+        <div class="price">예산 안 맞으면 새가람렌트카·길렌트카 전화 견적 비교</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%8F%98%EC%B9%B4%EC%A1%B4%20%EB%A7%8C%EB%8F%84%ED%94%8C%EB%9D%BC%EC%9E%90%20%EB%B6%80%EC%82%B0" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>을숙도 생태공원</h3><span class="tag activity">액티비티</span></div>
+        <div class="loc">사하구 · 차량 약 30분</div>
+        <div class="desc">낙동강 하구 평지 생태공원. 데크길이 잘 되어 있고 그늘이 많아 어머니와 걷기 편함. 차로 입구 바로 앞까지 진입 가능.</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%9D%84%EC%88%99%EB%8F%84%EC%83%9D%ED%83%9C%EA%B3%B5%EC%9B%90" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>재확인 필요</b> — 8/2를 렌트카 날로 잡은 건 날씨 조사에서 "잠정 1순위"로 나왔기 때문이에요. 8/2~8/5 정확한 예보는 아직 안 나왔으니(조사일 기준 7/22), <b>7/30~31에 다시 확인</b>해서 비 예보면 다른 날과 바꾸는 걸 추천해요.
+    </div>
+    <div class="alt-line">대안 나들이 코스 — 다대포해수욕장·몰운대(차 36분, 노을 명소) 또는 태종대(차 46분, 다누비열차로 안 걸어도 됨)</div>
+  </section>
+
+  <!-- DAY 2 -->
+  <section class="day-panel" data-panel="2" role="tabpanel" hidden>
+    <div class="day-head">
+      <h2>8/3 (월) — 원도심 코스</h2>
+      <span class="day-sub">서면 경유 · 남포동/자갈치 · 영도</span>
+    </div>
+    <div class="day-stats">이동 <b>지하철 35~55분</b> · 환승 <b>1~2회</b> · 예산 <b>2인 약 5~6만원</b></div>
+
+    <div class="route">
+      <div class="stop">
+        <div class="stop-name">개금동 자택</div>
+        <div class="stop-note">출발</div>
+      </div>
+      <div class="transit">지하철 2호선 → 1호선 환승, 약 35~40분</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">대성반점 (점심)</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EB%8C%80%EC%84%B1%EB%B0%98%EC%A0%90%20%EB%B6%80%EC%82%B0%20%EC%98%81%EC%A3%BC%EB%8F%99" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">중구 영주동</div>
+      </div>
+      <div class="transit">도보 이동</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">남포동 · 자갈치시장</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EC%9E%90%EA%B0%88%EC%B9%98%EC%8B%9C%EC%9E%A5" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">시장 구경</div>
+      </div>
+      <div class="transit">버스 환승, 총 50~55분 누적</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">영도 흰여울문화마을</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%ED%9D%B0%EC%97%AC%EC%9A%B8%EB%AC%B8%ED%99%94%EB%A7%88%EC%9D%84" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">해안 산책로 · 흰여울비치 카페</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top"><h3>대성반점</h3><span class="tag food">맛집</span></div>
+        <div class="loc">중구 영주동</div>
+        <div class="desc">짜장면·쟁반짜장. 부산역~중앙역 사이 골목 노포로, 관광객보다 현지 단골이 많은 곳.</div>
+        <div class="price">2인 약 2~3만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EB%8C%80%EC%84%B1%EB%B0%98%EC%A0%90%20%EB%B6%80%EC%82%B0%20%EC%98%81%EC%A3%BC%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>흰여울비치</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">영도구 · 흰여울문화마을</div>
+        <div class="desc">핑크톤 외관의 포토제닉한 4층 건물. 절영해안산책로 바로 옆 오션뷰.</div>
+        <div class="price">2인 약 1.8~2.2만원</div>
+        <div class="caution">화·수요일 휴무 — 방문 가능한 날이 월요일뿐이라 이 날 배치</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%ED%9D%B0%EC%97%AC%EC%9A%B8%EB%B9%84%EC%B9%98%20%EC%B9%B4%ED%8E%98" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+    </div>
+
+    <div class="alt-line">맛집 대안 — 중앙곰탕(중구 중앙동4가, 양수백, 2인 3.6만원)</div>
+  </section>
+
+  <!-- DAY 3 -->
+  <section class="day-panel" data-panel="3" role="tabpanel" hidden>
+    <div class="day-head">
+      <h2>8/4 (화) — 기장 라인 하루</h2>
+      <span class="day-sub">동해선 따라 하루 통째로</span>
+    </div>
+    <div class="day-stats">이동 <b>편도 80~90분</b> · 환승 <b>동해선 1회</b> · 예산 <b>2인 약 6~7만원</b></div>
+
+    <div class="route">
+      <div class="stop">
+        <div class="stop-name">개금동 자택</div>
+        <div class="stop-note">출발</div>
+      </div>
+      <div class="transit">지하철 2호선 → 동해선 환승, 편도 80~90분</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">바릇식당 (점심)</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EB%B0%94%EB%A6%87%EC%8B%9D%EB%8B%B9%20%EA%B8%B0%EC%9E%A5" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">기장군 일광읍 · 바닷가 오션뷰</div>
+      </div>
+      <div class="transit">인근 이동</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">웨이브온 (카페)</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EC%9B%A8%EC%9D%B4%EB%B8%8C%EC%98%A8%20%EC%BB%A4%ED%94%BC%20%EA%B8%B0%EC%9E%A5" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">기장군 장안읍 · 오션뷰</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top"><h3>바릇식당</h3><span class="tag food">맛집</span></div>
+        <div class="loc">기장군 일광읍</div>
+        <div class="desc">꼬막육전대판 · 꼬막비빔밥. 웨이팅이 있을 만큼 알려진 로컬 맛집, 바닷가 오션뷰.</div>
+        <div class="price">2인 약 4만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EB%B0%94%EB%A6%87%EC%8B%9D%EB%8B%B9%20%EA%B8%B0%EC%9E%A5" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card">
+        <div class="card-top"><h3>웨이브온</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">기장군 장안읍</div>
+        <div class="desc">기장 대표 대형 오션뷰 카페. 3층 + 루프탑 전 층이 바다뷰.</div>
+        <div class="price">2인 약 2~2.5만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%9B%A8%EC%9D%B4%EB%B8%8C%EC%98%A8%20%EC%BB%A4%ED%94%BC%20%EA%B8%B0%EC%9E%A5" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>이동시간 참고</b> — 편도 80~90분으로 왕복이 길어, 이 권역은 하루를 통째로 비우는 게 좋아요. 여유가 되면 돌아오는 길에 송정 젬스톤 카페를 더할 수 있지만, 무리라면 생략을 추천해요.
+    </div>
+    <div class="alt-line">카페 대안 — 오프오(기장읍, 독특한 인테리어·드라마 촬영지, 2인 2.5~3만원)</div>
+  </section>
+
+  <!-- DAY 4 -->
+  <section class="day-panel" data-panel="4" role="tabpanel" hidden>
+    <div class="day-head">
+      <h2>8/5 (수) — 해안 동부권 + 마무리 저녁</h2>
+      <span class="day-sub">광안리/해운대 · 여행 마지막 날</span>
+    </div>
+    <div class="day-stats">이동 <b>지하철 직통 35~50분</b> · 환승 <b>없음</b> · 예산 <b>2인 7~11만원 (특별한 날)</b></div>
+
+    <div class="route">
+      <div class="stop">
+        <div class="stop-name">개금동 자택</div>
+        <div class="stop-note">출발</div>
+      </div>
+      <div class="transit">지하철 2호선 직통, 광안리 35분 / 해운대 50분</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">광안리 또는 해운대</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener noreferrer">광안리 지도</a>
+          <a class="map-link" href="https://map.naver.com/p/search/%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener noreferrer">해운대 지도</a>
+        </div>
+        <div class="stop-note">해변 산책</div>
+      </div>
+      <div class="transit">인근 이동</div>
+      <div class="stop">
+        <div class="stop-head">
+          <span class="stop-name">연합횟집 (저녁)</span>
+          <a class="map-link" href="https://map.naver.com/p/search/%EC%97%B0%ED%95%A9%ED%9A%9F%EC%A7%91%20%EB%82%A8%EC%B2%9C%EB%8F%99" target="_blank" rel="noopener noreferrer">지도</a>
+        </div>
+        <div class="stop-note">수영구 남천동 · 여행 마무리 특별한 한 끼</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top"><h3>연합횟집</h3><span class="tag special">특별한 곳</span></div>
+        <div class="loc">수영구 남천동</div>
+        <div class="desc">세로회(12시간 숙성 세로썰기). 1979년부터 3대째 이어온 노포로, 부산 현지인이 인정하는 회 전문점.</div>
+        <div class="price">2인 약 7~11만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%97%B0%ED%95%A9%ED%9A%9F%EC%A7%91%20%EB%82%A8%EC%B2%9C%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+    </div>
+
+    <div class="alt-line">대안 — 캐비네 드 쁘아쏭(아난티코브, 고급 오션뷰 브런치, 2인 10만원대)으로 바꿔도 좋음</div>
+  </section>
+
+  <!-- CANDIDATE POOL -->
+  <section class="pool">
+    <h2>후보군 더 보기</h2>
+    <p class="pool-sub">위 일정에 아직 넣지 않은 후보예요. 마음에 드는 곳 있으면 위 일정과 바꿔드릴게요.</p>
+    <div class="pool-filters">
+      <button class="filter-btn" data-filter="all" aria-pressed="true">전체</button>
+      <button class="filter-btn" data-filter="food" aria-pressed="false">맛집</button>
+      <button class="filter-btn" data-filter="cafe" aria-pressed="false">카페</button>
+      <button class="filter-btn" data-filter="special" aria-pressed="false">특별한 곳</button>
+    </div>
+    <div class="pool-grid">
+      <div class="card" data-category="food">
+        <div class="card-top"><h3>김유순대구뽈찜</h3><span class="tag food">맛집</span></div>
+        <div class="loc">남구 대연동</div>
+        <div class="desc">대구뽈찜. 39년 전통, "재방문하게 된다"는 후기가 많은 로컬 맛집.</div>
+        <div class="price">2인 약 3.5~4만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EA%B9%80%EC%9C%A0%EC%88%9C%EB%8C%80%EA%B5%AC%EB%BD%88%EC%B0%9C%20%EB%8C%80%EC%97%B0%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="food">
+        <div class="card-top"><h3>이원화구포국시</h3><span class="tag food">맛집</span></div>
+        <div class="loc">북구 구포동</div>
+        <div class="desc">따신국시 · 비빔국시. 구포시장 상인들도 인정하는 초저가 로컬 국숫집.</div>
+        <div class="price">2인 약 1만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%9D%B4%EC%9B%90%ED%99%94%EA%B5%AC%ED%8F%AC%EA%B5%AD%EC%8B%9C%20%EA%B5%AC%ED%8F%AC%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="food">
+        <div class="card-top"><h3>삼대돼지불고기</h3><span class="tag food">맛집</span></div>
+        <div class="loc">동래구 온천동</div>
+        <div class="desc">돼지간장불고기 · 돼지양념갈비. 1970년부터 3대째 운영, 온천장 먹자골목 안쪽.</div>
+        <div class="price">2인 약 3~4만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%82%BC%EB%8C%80%EB%8F%BC%EC%A7%80%EB%B6%88%EA%B3%A0%EA%B8%B0%20%EC%98%A8%EC%B2%9C%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="food">
+        <div class="card-top"><h3>왔다식당</h3><span class="tag food">맛집</span></div>
+        <div class="loc">영도구 청학동</div>
+        <div class="desc">스지된장전골. 메뉴가 단 두 가지뿐인 로컬 맛집.</div>
+        <div class="price">2인 약 3만원</div>
+        <div class="caution">일요일 휴무, 영업은 8:30~14:30까지만</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%99%94%EB%8B%A4%EC%8B%9D%EB%8B%B9%20%EC%B2%AD%ED%95%99%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="food">
+        <div class="card-top"><h3>중앙곰탕</h3><span class="tag food">맛집</span></div>
+        <div class="loc">중구 중앙동4가</div>
+        <div class="desc">양수백(한우 양+우설+머릿고기+곰탕). 46년 전통, 인근 직장인들의 점심 단골집.</div>
+        <div class="price">2인 약 3.6만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%A4%91%EC%95%99%EA%B3%B0%ED%83%95%20%EC%A4%91%EC%95%99%EB%8F%99" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="cafe">
+        <div class="card-top"><h3>젬스톤 송정점</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">해운대구 송정동</div>
+        <div class="desc">통유리 외벽의 루프탑 오션뷰. 딸기라떼·딸기프레지에가 시그니처.</div>
+        <div class="price">2인 약 2.5~3만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%A0%AC%EC%8A%A4%ED%86%A4%20%EC%86%A1%EC%A0%95%EC%A0%90" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="cafe">
+        <div class="card-top"><h3>헤이든 신씨어</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">금정구 금성동 · 금정산성</div>
+        <div class="desc">부산에서 몇 안 되는 산뷰 카페. 산성마을버스 배차가 넓어 시간 여유를 두는 게 좋음.</div>
+        <div class="price">2인 약 2.2~2.6만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%ED%97%A4%EC%9D%B4%EB%93%A0%EC%8B%A0%EC%94%A8%EC%96%B4%20%EA%B8%88%EC%A0%95%EC%82%B0%EC%84%B1" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="cafe">
+        <div class="card-top"><h3>해월당 다대포점</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">사하구 다대동</div>
+        <div class="desc">다대포 노을뷰. 지하철 환승 한 번으로 접근 가능해 후보 중 이동이 가장 편함.</div>
+        <div class="price">2인 약 2.4~2.8만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%ED%95%B4%EC%9B%94%EB%8B%B9%20%EB%8B%A4%EB%8C%80%ED%8F%AC%EC%A0%90" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="cafe">
+        <div class="card-top"><h3>오프오</h3><span class="tag cafe">카페</span></div>
+        <div class="loc">기장군 기장읍</div>
+        <div class="desc">옛 이탈리안 레스토랑을 개조한 독특한 인테리어. 드라마 촬영지로도 알려짐.</div>
+        <div class="price">2인 약 2.5~3만원</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%98%A4%ED%94%84%EC%98%A4%20%EA%B8%B0%EC%9E%A5" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+      <div class="card" data-category="special">
+        <div class="card-top"><h3>캐비네 드 쁘아쏭</h3><span class="tag special">특별한 곳</span></div>
+        <div class="loc">기장군 · 아난티코브</div>
+        <div class="desc">통유리 너머 바로 앞 바다가 보이는 고급 오션뷰 브런치 카페.</div>
+        <div class="price">2인 브런치 포함 10만원 이상</div>
+        <a class="card-map" href="https://map.naver.com/p/search/%EC%BA%90%EB%B9%84%EB%84%A4%EB%93%9C%EC%81%98%EC%95%84%EC%8F%AD%20%EC%95%84%EB%82%9C%ED%8B%B0%EC%BD%94%EB%B8%8C" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="notes">
+    <h2>참고해주세요</h2>
+    <ul>
+      <li><b>지도 보기</b> — 각 장소 옆 "지도" 버튼을 누르면 실제 네이버 지도로 바로 연결돼요. 이 페이지 안에 지도를 통째로 띄우는 건 보안 정책상 막혀 있어서, 대신 장소별 링크로 연결했어요</li>
+      <li><b>예산 원칙</b> — 맛집·카페 한 곳당 2인 2~3만원 기본, 특별한 날 1회는 10만원대까지 열어둠</li>
+      <li><b>이동 원칙</b> — 대중교통 기준 하루 1곳, 렌트카 이용일(8/2)만 예외</li>
+      <li><b>이동시간</b> — 실시간 경로가 아닌 노선 기준 추정치예요. 출발 전 지도 앱으로 한 번 더 확인하는 걸 추천해요</li>
+      <li><b>날씨</b> — 8/2~8/5 정확한 예보는 아직 안 나왔어요(조사일 7/22 기준). 7/30~31에 다시 확인해서 렌트카 날짜를 최종 확정하는 게 좋아요</li>
+    </ul>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.day-tab');
+    var panels = document.querySelectorAll('.day-panel');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var day = tab.getAttribute('data-day');
+        tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t === tab)); });
+        panels.forEach(function (p) {
+          var match = p.getAttribute('data-panel') === day;
+          p.classList.toggle('active', match);
+          if (match) { p.removeAttribute('hidden'); } else { p.setAttribute('hidden', ''); }
+        });
+      });
+    });
+
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var poolCards = document.querySelectorAll('.pool-grid .card');
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        var filter = btn.getAttribute('data-filter');
+        poolCards.forEach(function (card) {
+          var show = filter === 'all' || card.getAttribute('data-category') === filter;
+          if (show) { card.removeAttribute('hidden'); } else { card.setAttribute('hidden', ''); }
+        });
+      });
+    });
+  })();
+</script>
